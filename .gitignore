@@ -1,0 +1,55 @@
+### Java ###
+*.class
+*.jar
+*.war
+*.ear
+*.log
+*.tmp
+*.swp
+*.swo
+
+### IntelliJ IDEA ###
+.idea/
+*.iml
+out/
+
+### Eclipse ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings/
+bin/
+
+### NetBeans ###
+nbproject/private/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+
+### VS Code ###
+.vscode/
+
+### OS ###
+.DS_Store
+Thumbs.db
+
+### Build systems ###
+build/
+target/
+
+### Gradle ###
+.gradle/
+!gradle-wrapper.jar
+
+### Maven ###
+.mvn/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+
+### Logs ###
+logs/
