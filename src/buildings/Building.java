@@ -1,11 +1,13 @@
 package buildings;
 
 import java.util.Map;
+import java.io.Serializable;
 
 /**
  * Interfejs dla budynków specjalnych
  */
-public interface Building {
+public interface Building extends Serializable {
+
     /**
      * Zwraca nazwę budynku
      */

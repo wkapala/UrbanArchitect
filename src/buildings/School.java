@@ -4,6 +4,7 @@ package buildings;
  * Budynek: Szkoła
  */
 public class School extends AbstractBuilding {
+    private static final long serialVersionUID = 1L;
 
     public School() {
         super("Szkoła podstawowa", BuildingType.SCHOOL, 500, 50, 3);
@@ -19,11 +20,11 @@ public class School extends AbstractBuilding {
 
     @Override
     public String getName() {
-        switch (level) {
-            case 1: return "Szkoła podstawowa";
-            case 2: return "Szkoła średnia";
-            case 3: return "Kompleks edukacyjny";
-            default: return super.getName();
-        }
+        return switch (level) {
+            case 1 -> "Szkoła podstawowa";
+            case 2 -> "Szkoła średnia";
+            case 3 -> "Kompleks edukacyjny";
+            default -> super.getName();
+        };
     }
 }

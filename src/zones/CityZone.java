@@ -1,13 +1,16 @@
 package zones;
 
 import buildings.Building;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * Implementacja strefy miejskiej
  */
-public class CityZone implements Zone {
+public class CityZone implements Zone, Serializable {
+    private static final long serialVersionUID = 1L;
+
     private ZoneType type;
     private Building building;
     private final int x;

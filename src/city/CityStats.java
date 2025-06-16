@@ -3,11 +3,14 @@ package city;
 import zones.*;
 import java.util.Map;
 import java.util.HashMap;
+import java.io.Serializable;
 
 /**
  * Klasa przechowująca statystyki miasta
  */
-public class CityStats {
+public class CityStats implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private int population;
     private int happiness;
     private int jobs;

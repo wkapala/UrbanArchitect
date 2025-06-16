@@ -4,6 +4,7 @@ package buildings;
  * Budynek: Muzeum
  */
 public class Museum extends AbstractBuilding {
+    private static final long serialVersionUID = 1L;
 
     public Museum() {
         super("Muzeum lokalne", BuildingType.MUSEUM, 600, 60, 5);
@@ -19,11 +20,11 @@ public class Museum extends AbstractBuilding {
 
     @Override
     public String getName() {
-        switch (level) {
-            case 1: return "Muzeum lokalne";
-            case 2: return "Muzeum miejskie";
-            case 3: return "Muzeum narodowe";
-            default: return super.getName();
-        }
+        return switch (level) {
+            case 1 -> "Muzeum lokalne";
+            case 2 -> "Muzeum miejskie";
+            case 3 -> "Muzeum narodowe";
+            default -> super.getName();
+        };
     }
 }

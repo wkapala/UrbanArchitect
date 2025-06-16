@@ -53,3 +53,6 @@ release.properties
 
 ### Logs ###
 logs/
+
+### Save Files ###
+urban_architect_save.dat

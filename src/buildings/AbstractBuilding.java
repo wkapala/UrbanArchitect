@@ -1,12 +1,15 @@
 package buildings;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * Abstrakcyjna klasa bazowa dla budynków
  */
-public abstract class AbstractBuilding implements Building {
+public abstract class AbstractBuilding implements Building, Serializable {
+    private static final long serialVersionUID = 1L;
+
     protected String name;
     protected BuildingType type;
     protected int level;
@@ -26,9 +29,6 @@ public abstract class AbstractBuilding implements Building {
         initializeInfluence();
     }
 
-    /**
-     * Inicjalizuje bazowe wartości wpływu - do nadpisania w klasach pochodnych
-     */
     protected abstract void initializeInfluence();
 
     @Override
@@ -49,12 +49,9 @@ public abstract class AbstractBuilding implements Building {
     @Override
     public Map<String, Integer> getInfluence() {
         Map<String, Integer> influence = new HashMap<>(baseInfluence);
-
-        // Wpływ rośnie z poziomem
         for (Map.Entry<String, Integer> entry : influence.entrySet()) {
             entry.setValue((int)(entry.getValue() * (1 + (level - 1) * 0.5)));
         }
-
         return influence;
     }
 
@@ -84,7 +81,6 @@ public abstract class AbstractBuilding implements Building {
 
     @Override
     public void update() {
-        // Domyślnie budynki nie wymagają aktualizacji
         // Może być nadpisane w klasach pochodnych
     }
 }

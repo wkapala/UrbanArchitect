@@ -4,6 +4,7 @@ package buildings;
  * Budynek: Szpital
  */
 public class Hospital extends AbstractBuilding {
+    private static final long serialVersionUID = 1L;
 
     public Hospital() {
         super("Przychodnia", BuildingType.HOSPITAL, 800, 100, 4);
@@ -19,11 +20,11 @@ public class Hospital extends AbstractBuilding {
 
     @Override
     public String getName() {
-        switch (level) {
-            case 1: return "Przychodnia";
-            case 2: return "Szpital miejski";
-            case 3: return "Centrum medyczne";
-            default: return super.getName();
-        }
+        return switch (level) {
+            case 1 -> "Przychodnia";
+            case 2 -> "Szpital miejski";
+            case 3 -> "Centrum medyczne";
+            default -> super.getName();
+        };
     }
 }

@@ -2,6 +2,7 @@ package city;
 
 import zones.*;
 import buildings.Building;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.HashMap;
@@ -10,13 +11,14 @@ import java.util.Map;
 /**
  * Klasa reprezentująca mapę miasta
  */
-public class CityMap {
+public class CityMap implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private final int width;
     private final int height;
     private final CityZone[][] grid;
     private int developedTiles;
     private int buildableTiles;
-
     public CityMap(int width, int height) {
         this.width = width;
         this.height = height;
