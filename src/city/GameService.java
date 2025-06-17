@@ -247,7 +247,7 @@ public class GameService {
             if (selectedType != ZoneType.ROAD && selectedType != ZoneType.PARK) {
                 if (!cityMap.isNextToRoad(x, y)) {
                     System.out.println("❌ Ta strefa wymaga dostępu do drogi!");
-                    System.out.println("   Zbuduj najpierw drogę obok tej lokalizacji.");
+                    System.out.println("❌  Zbuduj najpierw drogę obok tej lokalizacji.");
                     showNearbyRoads(x, y);
 
                     if (!InputUtils.getYesNo("Czy chcesz spróbować w innym miejscu?")) {
@@ -277,11 +277,11 @@ public class GameService {
                 // Sprawdź dlaczego nie można zbudować
                 CityZone zone = cityMap.getZone(x, y);
                 if (zone == null) {
-                    System.out.println("❌ Nieprawidłowa pozycja!");
+                    System.out.println("Nieprawidłowa pozycja!");
                 } else if (!zone.getType().isBuildable()) {
-                    System.out.println("❌ Nie można budować na terenie: " + zone.getType().getName());
+                    System.out.println("Nie można budować na terenie: " + zone.getType().getName());
                 } else if (zone.getType() != ZoneType.EMPTY) {
-                    System.out.println("❌ To miejsce jest już zabudowane!");
+                    System.out.println("To miejsce jest już zabudowane!");
                 }
 
                 if (!InputUtils.getYesNo("Czy chcesz spróbować w innym miejscu?")) {
@@ -316,7 +316,7 @@ public class GameService {
         }
 
         if (!foundRoad) {
-            System.out.println("  Brak dróg w pobliżu - musisz najpierw zbudować drogę!");
+            System.out.println("❌  Brak dróg w pobliżu - musisz najpierw zbudować drogę!");
         }
     }
 
@@ -541,29 +541,33 @@ public class GameService {
         InputUtils.waitForEnter();
     }
 
+    /**
+    * Obliczanie punktów do rankingu
+    */
+
     private int calculateScore(boolean victory) {
         int score = 0;
 
-        // Punkty za zwycięstwo
+        //  za zwycięstwo
         if (victory) {
             score += 1000;
             // Bonus za szybkość
             score += (maxMonths - gameState.getCurrentMonth()) * 50;
         }
 
-        // Punkty za rozwój
+        // za rozwój
         score += (int)(cityMap.getDevelopmentPercentage() * 10);
 
-        // Punkty za szczęście
+        // za szczęście
         score += cityStats.getHappiness() * 5;
 
-        // Punkty za budżet
+        // za budżet
         score += Math.min(budgetManager.getBalance() / 10, 500);
 
-        // Punkty za reputację
+        // za reputację
         score += reputationManager.getReputation() * 10;
 
-        // Modyfikator trudności
+        // trudnosc
         switch (gameState.getScenario()) {
             case 2: score = (int)(score * 1.5); break;
             case 3: score = (int)(score * 2.0); break;
@@ -575,7 +579,7 @@ public class GameService {
     private void saveGame() {
         System.out.println("\n💾 Zapisywanie gry...");
         if (gameState.saveToFile()) {
-            System.out.println("✓ Gra zapisana pomyślnie!");
+            System.out.println("Gra zapisana pomyślnie!");
         } else {
             System.out.println("❌ Błąd zapisu gry!");
         }
