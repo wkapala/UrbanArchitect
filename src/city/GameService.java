@@ -190,45 +190,134 @@ public class GameService {
     }
 
     private void planZone() {
-        MapRenderer.display(cityMap);
+        boolean continuePlanning = true;
 
-        System.out.println("\n=== PLANOWANIE STREFY ===");
-        System.out.println("Dostępne strefy:");
-        System.out.println("1. [R] Mieszkalna (100 zł)");
-        System.out.println("2. [C] Komercyjna (150 zł)");
-        System.out.println("3. [I] Przemysłowa (200 zł)");
-        System.out.println("4. [P] Park (50 zł)");
-        System.out.println("5. [#] Droga (20 zł)");
-        System.out.println("6. Anuluj");
+        while (continuePlanning) {
+            MapRenderer.display(cityMap);
 
-        int choice = InputUtils.getInt("Wybierz typ: ", 1, 6);
-        if (choice == 6) return;
+            // Pokazuj aktualny stan budżetu
+            System.out.println("\n💰 Budżet: " + budgetManager.getBalance() + " zł");
 
-        ZoneType selectedType = null;
-        switch (choice) {
-            case 1: selectedType = ZoneType.RESIDENTIAL; break;
-            case 2: selectedType = ZoneType.COMMERCIAL; break;
-            case 3: selectedType = ZoneType.INDUSTRIAL; break;
-            case 4: selectedType = ZoneType.PARK; break;
-            case 5: selectedType = ZoneType.ROAD; break;
-        }
+            System.out.println("\n=== PLANOWANIE STREFY ===");
+            System.out.println("⚠️ Uwaga: Budynki (oprócz parków i dróg) muszą być przy drodze!");
+            System.out.println("\nDostępne strefy:");
+            System.out.println("1. [R] Mieszkalna (100 zł)");
+            System.out.println("2. [C] Komercyjna (150 zł)");
+            System.out.println("3. [I] Przemysłowa (200 zł)");
+            System.out.println("4. [P] Park (50 zł)");
+            System.out.println("5. [#] Droga (20 zł)");
+            System.out.println("6. ❌ Wyjdź z planowania");
 
-        int x = InputUtils.getInt("Podaj współrzędną X: ", 0, cityMap.getWidth() - 1);
-        int y = InputUtils.getInt("Podaj współrzędną Y: ", 0, cityMap.getHeight() - 1);
+            int choice = InputUtils.getInt("Wybierz typ: ", 1, 6);
 
-        if (budgetManager.canAfford(selectedType.getBuildCost())) {
+            if (choice == 6) {
+                continuePlanning = false;
+                break;
+            }
+
+            ZoneType selectedType = null;
+            switch (choice) {
+                case 1: selectedType = ZoneType.RESIDENTIAL; break;
+                case 2: selectedType = ZoneType.COMMERCIAL; break;
+                case 3: selectedType = ZoneType.INDUSTRIAL; break;
+                case 4: selectedType = ZoneType.PARK; break;
+                case 5: selectedType = ZoneType.ROAD; break;
+            }
+
+            // Pokazuj mapę z współrzędnymi jeszcze raz przed wyborem
+            System.out.println("\nWybierz lokalizację na mapie:");
+
+            int x = InputUtils.getInt("Współrzędna X (0-" + (cityMap.getWidth()-1) + "): ",
+                    0, cityMap.getWidth() - 1);
+            int y = InputUtils.getInt("Współrzędna Y (0-" + (cityMap.getHeight()-1) + "): ",
+                    0, cityMap.getHeight() - 1);
+
+            // Sprawdź środki
+            if (!budgetManager.canAfford(selectedType.getBuildCost())) {
+                System.out.println("❌ Brak środków! Potrzebujesz " + selectedType.getBuildCost() + " zł");
+
+                // Zapytaj czy kontynuować mimo braku środków
+                if (!InputUtils.getYesNo("Czy chcesz kontynuować planowanie?")) {
+                    continuePlanning = false;
+                }
+                continue;
+            }
+
+            // Sprawdź wymóg drogi
+            if (selectedType != ZoneType.ROAD && selectedType != ZoneType.PARK) {
+                if (!cityMap.isNextToRoad(x, y)) {
+                    System.out.println("❌ Ta strefa wymaga dostępu do drogi!");
+                    System.out.println("   Zbuduj najpierw drogę obok tej lokalizacji.");
+                    showNearbyRoads(x, y);
+
+                    if (!InputUtils.getYesNo("Czy chcesz spróbować w innym miejscu?")) {
+                        continuePlanning = false;
+                    }
+                    continue;
+                }
+            }
+
+            // Próbuj zbudować
             if (cityMap.buildZone(x, y, selectedType)) {
                 budgetManager.spend(selectedType.getBuildCost(),
                         "Budowa strefy: " + selectedType.getName());
-                System.out.println("✓ Strefa " + selectedType.getName() + " wybudowana!");
+                System.out.println("✅ Strefa " + selectedType.getName() + " wybudowana!");
+                System.out.println("💰 Pozostały budżet: " + budgetManager.getBalance() + " zł");
+
+                // Dodatkowa informacja dla dróg
+                if (selectedType == ZoneType.ROAD) {
+                    System.out.println("💡 Teraz możesz budować inne strefy przy tej drodze.");
+                }
+
+                // Zapytaj czy kontynuować
+                if (!InputUtils.getYesNo("\nCzy chcesz zbudować coś jeszcze?")) {
+                    continuePlanning = false;
+                }
             } else {
-                System.out.println("❌ Nie można zbudować w tym miejscu!");
+                // Sprawdź dlaczego nie można zbudować
+                CityZone zone = cityMap.getZone(x, y);
+                if (zone == null) {
+                    System.out.println("❌ Nieprawidłowa pozycja!");
+                } else if (!zone.getType().isBuildable()) {
+                    System.out.println("❌ Nie można budować na terenie: " + zone.getType().getName());
+                } else if (zone.getType() != ZoneType.EMPTY) {
+                    System.out.println("❌ To miejsce jest już zabudowane!");
+                }
+
+                if (!InputUtils.getYesNo("Czy chcesz spróbować w innym miejscu?")) {
+                    continuePlanning = false;
+                }
             }
-        } else {
-            System.out.println("❌ Brak środków!");
         }
 
+        System.out.println("\n✓ Zakończono planowanie");
         InputUtils.waitForEnter();
+    }
+
+    // Pomocnicza metoda pokazująca gdzie są drogi
+    private void showNearbyRoads(int x, int y) {
+        System.out.println("\nNajbliższe drogi:");
+        boolean foundRoad = false;
+
+        // Sprawdź obszar 3x3 wokół
+        for (int dy = -3; dy <= 3; dy++) {
+            for (int dx = -3; dx <= 3; dx++) {
+                int nx = x + dx;
+                int ny = y + dy;
+
+                if (cityMap.isValidPosition(nx, ny)) {
+                    CityZone zone = cityMap.getZone(nx, ny);
+                    if (zone != null && zone.getType() == ZoneType.ROAD) {
+                        System.out.println("  • Droga na pozycji [" + nx + "," + ny + "]");
+                        foundRoad = true;
+                    }
+                }
+            }
+        }
+
+        if (!foundRoad) {
+            System.out.println("  Brak dróg w pobliżu - musisz najpierw zbudować drogę!");
+        }
     }
 
     private void buildSpecialBuilding() {
@@ -396,7 +485,7 @@ public class GameService {
 
         boolean happinessOk = cityStats.getHappiness() > 75;
         boolean budgetOk = budgetManager.isBalanced();
-        boolean developmentOk = cityMap.getDevelopmentPercentage() >= 80;
+        boolean developmentOk = cityMap.getDevelopmentPercentage() >= 40;
 
         if (happinessOk && budgetOk && developmentOk) {
             return true;

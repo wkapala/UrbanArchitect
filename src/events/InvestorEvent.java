@@ -62,6 +62,6 @@ public class InvestorEvent implements Event {
     @Override
     public boolean canOccur(GameService gameService) {
         // Występuje gdy miasto jest średnio rozwinięte
-        return gameService.getCityMap().getDevelopmentPercentage() > 30;
+        return gameService.getCityMap().getDevelopmentPercentage() > 10;
     }
 }

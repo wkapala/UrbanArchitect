@@ -163,11 +163,12 @@ public class BudgetManager {
      * Zwraca status balansu
      */
     private String getBalanceStatus() {
-        if (balance > 10000) return "💎 Świetnie!";
-        if (balance > 5000) return "✅ Dobrze";
-        if (balance > 1000) return "⚠️ Uwaga";
-        if (balance > 0) return "⚠️ Krytycznie";
-        return "🔴 Bankructwo!";
+        if (balance > 5000) return "💎 Świetnie!";
+        if (balance > 3000) return "✅ Dobrze";
+        if (balance > 1500) return "⚠️ Uwaga";
+        if (balance > 500) return "🟡 Krytycznie";
+        if (balance > 0) return "🔴 Niebezpiecznie";
+        return "💀 Bankructwo!";
     }
 
     /**

@@ -94,7 +94,7 @@ public class UrbanArchitect {
         System.out.println("Stwórz stabilne miasto spełniające następujące warunki:");
         System.out.println("• Zadowolenie mieszkańców > 75%");
         System.out.println("• Zrównoważony budżet (przychody ≥ wydatki)");
-        System.out.println("• Zagospodarowanie ≥ 80% terenu");
+        System.out.println("• Zagospodarowanie ≥ 40% terenu");
 
         System.out.println("\n🏗️ TYPY STREF:");
         System.out.println("• [R] Mieszkalne - domy dla mieszkańców");

@@ -138,6 +138,13 @@ public class CityMap implements Serializable {
             return false;
         }
 
+        // Sprawdź czy budynek wymaga drogi
+        if (type != ZoneType.ROAD && type != ZoneType.PARK) {
+            if (!isNextToRoad(x, y)) {
+                return false; // Brak drogi w pobliżu
+            }
+        }
+
         CityZone zone = grid[y][x];
         if (zone.getType() == ZoneType.EMPTY) {
             zone.setType(type);
@@ -152,6 +159,11 @@ public class CityMap implements Serializable {
      */
     public boolean buildSpecialBuilding(int x, int y, Building building) {
         if (!isValidPosition(x, y) || !grid[y][x].canBuild()) {
+            return false;
+        }
+
+        // Budynki specjalne też wymagają drogi
+        if (!isNextToRoad(x, y)) {
             return false;
         }
 
@@ -232,6 +244,23 @@ public class CityMap implements Serializable {
                 grid[y][x].update();
             }
         }
+    }
+
+    /**
+     * Sprawdza czy pozycja sąsiaduje z drogą
+     */
+    public boolean isNextToRoad(int x, int y) {
+        // Sprawdź 4 kierunki (góra, dół, lewo, prawo)
+        int[][] directions = {{0, -1}, {0, 1}, {-1, 0}, {1, 0}};
+
+        for (int[] dir : directions) {
+            int nx = x + dir[0];
+            int ny = y + dir[1];
+            if (isValidPosition(nx, ny) && grid[ny][nx].getType() == ZoneType.ROAD) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

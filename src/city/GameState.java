@@ -21,7 +21,7 @@ public class GameState implements Serializable {
         this.cityName = cityName;
         this.scenario = scenario;
         this.currentMonth = 1;
-        this.budget = 10000; // Startowy budżet
+        this.budget = 2000; // Startowy budżet
         this.reputation = 50;
     }
 
