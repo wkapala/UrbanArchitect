@@ -4,10 +4,9 @@ import city.GameState;
 import city.GameService;
 import reputation.ScoreManager;
 import utils.InputUtils;
-import utils.ASCIIArt;
 
 /**
- * Główna klasa gry Urban Architect
+ * Główna klasa
  */
 public class UrbanArchitect {
 
@@ -18,7 +17,6 @@ public class UrbanArchitect {
 
     private void showMainMenu() {
         while (true) {
-            ASCIIArt.displayTitle();
             System.out.println("\n╔════════════════════════════════════╗");
             System.out.println("║      URBAN ARCHITECT 2025 🏙️       ║");
             System.out.println("╚════════════════════════════════════╝");
@@ -52,9 +50,9 @@ public class UrbanArchitect {
 
     private void startNewGame() {
         System.out.println("\n=== WYBÓR SCENARIUSZA ===");
-        System.out.println("1. 🌊 Miasto nad rzeką (Łatwy)");
-        System.out.println("2. ⛰️ Teren górzysty (Średni)");
-        System.out.println("3. 🏭 Teren poprzemysłowy (Trudny)");
+        System.out.println("1. 🌊 Miasto nad rzeką");
+        System.out.println("2. ⛰️ Teren górzysty");
+        System.out.println("3. 🏭 Były teren przemysłowy");
         System.out.println("4. 🎮 Tryb sandbox (Bez ograniczeń)");
 
         int scenario = InputUtils.getInt("Wybierz scenariusz: ", 1, 4);
@@ -96,14 +94,14 @@ public class UrbanArchitect {
         System.out.println("• Zrównoważony budżet (przychody ≥ wydatki)");
         System.out.println("• Zagospodarowanie ≥ 40% terenu");
 
-        System.out.println("\n🏗️ TYPY STREF:");
+        System.out.println("\n TYPY STREF:");
         System.out.println("• [R] Mieszkalne - domy dla mieszkańców");
         System.out.println("• [C] Komercyjne - sklepy, biura");
         System.out.println("• [I] Przemysłowe - fabryki, magazyny");
         System.out.println("• [P] Parki - tereny zielone");
         System.out.println("• [S] Specjalne - szkoły, szpitale, kultura");
 
-        System.out.println("\n📊 MECHANIKI:");
+        System.out.println("\n MECHANIKI:");
         System.out.println("• Każdy budynek wpływa na otoczenie");
         System.out.println("• Mieszkańcy reagują na zmiany");
         System.out.println("• Wydarzenia losowe mogą pomóc lub zaszkodzić");
@@ -113,7 +111,7 @@ public class UrbanArchitect {
         System.out.println("• Zachowaj balans między różnymi strefami");
         System.out.println("• Parki zwiększają zadowolenie w pobliżu");
         System.out.println("• Przemysł generuje dochody, ale obniża zadowolenie");
-        System.out.println("• Infrastruktura społeczna jest kosztowna, ale potrzebna");
+        System.out.println("• Infrastruktura społeczna jest kosztowna, ale potrzebna do zadowolenia społeczności");
 
         InputUtils.waitForEnter();
     }

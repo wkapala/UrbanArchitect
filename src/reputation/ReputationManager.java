@@ -56,31 +56,31 @@ public class ReputationManager {
             effects.migrationBonus = 20;
             effects.taxCompliance = 1.2;
             effects.eventChanceModifier = 1.5;
-            effects.status = "Legendarny burmistrz! 🌟";
+            effects.status = "Legendarny";
         } else if (reputation >= 60) {
             effects.investorInterest = 1.5;
             effects.migrationBonus = 10;
             effects.taxCompliance = 1.1;
             effects.eventChanceModifier = 1.2;
-            effects.status = "Szanowany lider 👍";
+            effects.status = "Szanowany";
         } else if (reputation >= 40) {
             effects.investorInterest = 1.0;
             effects.migrationBonus = 0;
             effects.taxCompliance = 1.0;
             effects.eventChanceModifier = 1.0;
-            effects.status = "Przeciętny zarządca 😐";
+            effects.status = "Przeciętny";
         } else if (reputation >= 20) {
             effects.investorInterest = 0.7;
             effects.migrationBonus = -10;
             effects.taxCompliance = 0.9;
             effects.eventChanceModifier = 0.8;
-            effects.status = "Kontrowersyjny burmistrz 😟";
+            effects.status = "Kontrowersyjny";
         } else {
             effects.investorInterest = 0.5;
             effects.migrationBonus = -20;
             effects.taxCompliance = 0.7;
             effects.eventChanceModifier = 0.5;
-            effects.status = "Persona non grata 😡";
+            effects.status = "Persona non grata";
         }
 
         return effects;

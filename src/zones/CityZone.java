@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Implementacja strefy miejskiej
+ * Implementacja strefu miejskiej
  */
 public class CityZone implements Zone, Serializable {
     private static final long serialVersionUID = 1L;

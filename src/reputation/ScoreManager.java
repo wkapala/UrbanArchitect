@@ -62,7 +62,7 @@ public class ScoreManager {
         scores.add(entry);
         Collections.sort(scores);
 
-        // Ogranicz do MAX_ENTRIES
+        // ogranicz do MAX_ENTRIES
         if (scores.size() > MAX_ENTRIES) {
             scores = scores.subList(0, MAX_ENTRIES);
         }

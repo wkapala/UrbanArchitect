@@ -1,1 +1,2 @@
 testowo;Testowo;2300;3;false;2025-06-16T21:52:58.2128149
+MocnyZawodnik;Testowo2;6700;1;true;2025-06-17T21:52:58.2128149
