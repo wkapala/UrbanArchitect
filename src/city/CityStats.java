@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.io.Serializable;
 
 /**
- * Klasa przechowująca statystyki miasta
+ * Klasa ze statystykami miasta
  */
 public class CityStats implements Serializable {
     private static final long serialVersionUID = 1L;
